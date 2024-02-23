@@ -13,10 +13,19 @@
 *************/
 float O2;
 float factor;
+float ondergrens; // in digitale waarde van 0 tot 1023
+float bovengrens; // idem
 
 void setup() {
   Serial.begin(115200);
   factor = (23.39 - 7.35)/1023;
+  /* Voor bruine draad van de analoge output 
+  * dwz het bereik van 0.1 tot 1.1 volt =
+  * AFR 15 tot AFR 14 
+  */
+  ondergrens = 0.1 / 5;
+  bovengrens = 1.1 / 5;
+
 }
 
 void loop() {
