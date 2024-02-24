@@ -23,14 +23,21 @@ void setup() {
   * dwz het bereik van 0.1 tot 1.1 volt =
   * AFR 15 tot AFR 14 
   */
-  ondergrens = 0.1 / 5;
-  bovengrens = 1.1 / 5;
-
+  ondergrens = 1023.0 * 0.1 / 5.0;
+  bovengrens = 1023.0 * 1.1 / 5.0;
 }
 
 void loop() {
 O2 = analogRead(A0);
 O2 = 7.35 + O2 * factor;
 Serial.println(O2);
+/* Voor het kleine bereik */
+O2 = analogRead(A2);
+if (O2 >= ondergrens && O2 <= bovengrens) {
+  O2 = 15 - 4.5 * O2 / 1023;
+  Serial.println(O2);
+} else {
+  Serial.println("****");
+}
 delay(1000);
 }
