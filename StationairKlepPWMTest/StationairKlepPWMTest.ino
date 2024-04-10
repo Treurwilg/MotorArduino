@@ -25,6 +25,7 @@
  
 void setup() {
   Serial.begin(115200);
+  pinMode(pinOut, OUTPUT);
   oudeTijd = micros();
   oudePrintTijd = micros();
   digitalWrite(pinOut, HIGH);
