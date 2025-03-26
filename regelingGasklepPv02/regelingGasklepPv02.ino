@@ -28,7 +28,7 @@ void setup() {
   Serial.begin(115200);
   pinMode(pinStuurwaarde, OUTPUT);
   tijdOud = millis();
-  Kp = 0.9;
+  Kp = 1.2;
 }
 
 void loop() {
@@ -43,7 +43,7 @@ void loop() {
   stuurwaarde = stuurwaarde / 4.; // analogWrite() heeft ingangsbereik van 0 - 255.
   analogWrite(pinStuurwaarde, stuurwaarde);
   if ((tijd - tijdOud) > 1000) {
-    Serial.println("Output from  sketch regelingGasklepPv02");
+    Serial.println("Output from  sketch regelingGasklepPv02:");
     Serial.print("setpoint:    ");
     Serial.println((int)setpoint);
     Serial.print("onderwaarde: ");
