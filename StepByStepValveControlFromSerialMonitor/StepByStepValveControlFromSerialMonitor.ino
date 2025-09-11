@@ -24,8 +24,8 @@ byte valvePosition; // aantal stappen
 
 unsigned long curMillis;
 unsigned long prevStepMillis = 0;
-unsigned long pulseLengthMillis = 5;
-unsigned long millisBetweenSteps = 500;
+unsigned long pulseLengthMillis = 2;
+unsigned long millisBetweenSteps = 10;
 
 void moveSingleStep() {
   while ((millis() - prevStepMillis) < millisBetweenSteps ) {}
@@ -115,7 +115,3 @@ void loop() {
   printSituation();
   }
 }
-
-
-
-
