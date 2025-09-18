@@ -24,8 +24,8 @@ byte valvePosition; // aantal stappen
 
 unsigned long curMillis;
 unsigned long prevStepMillis = 0;
-unsigned long pulseLengthMillis = 2;
-unsigned long millisBetweenSteps = 10;
+unsigned long pulseLengthMillis = 5;
+unsigned long millisBetweenSteps = 500;
 
 void moveSingleStep() {
   while ((millis() - prevStepMillis) < millisBetweenSteps ) {}
@@ -40,14 +40,15 @@ void printSituation() {
 }
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
+  Serial.println("Begin");
   Serial.println("Starting idle valve control test");
-  Serial.println("Sketch: StepByStepValveControlFromSerialMonitor");                          
+  Serial.println("Sketch: StepByStepValveControlFromSerialMonitor");
+  Serial.println("Het eerste traject is voor de bepaling van he nulpunt");                          
   pinMode(directionPin, OUTPUT);
   pinMode(stepPin, OUTPUT);
   digitalWrite(stepPin, LOW);
   int i;
-  valvePosition = 100;
 
   // initieer klep in gesloten (valvePosition 0) 
   // resp geopende positie (valvePosition 90)
@@ -55,11 +56,10 @@ void setup() {
   // 
   digitalWrite( directionPin, HIGH); // is: sluiten
   i = 0;
-  while ( i < 90 ) {
+  while ( i < 93 ) {
     moveSingleStep();
     i++;
-    valvePosition--;
-    Serial.println(valvePosition);
+    Serial.println("Naar nulpunt");
   }
   valvePosition = 0;
 
@@ -69,11 +69,11 @@ void setup() {
     moveSingleStep();
     i++;
     valvePosition++;
-    Serial.println(valvePosition);
+    printSituation();
   }  
   valvePosition = 90;
 
-  Serial.println(valvePosition);
+  printSituation();
   // zet nu de klep op zijn operationele uiterste 
   // openstand, valvePosition 80;
   digitalWrite( directionPin, HIGH );
@@ -83,7 +83,7 @@ void setup() {
     i++;
     valvePosition--;
     Serial.println("setup klein beetje sluiten: ");
-    Serial.println(valvePosition);
+    printSituation();
   }
 }
 
@@ -103,15 +103,14 @@ void loop() {
         digitalWrite( directionPin, LOW);
         moveSingleStep();
         valvePosition++;
-        Serial.println(valvePosition);
+        printSituation();
       }
       if (( stappen < 0) && (valvePosition > 10 )) {
         digitalWrite( directionPin, HIGH);
         moveSingleStep();
         valvePosition--;
-        Serial.println(valvePosition);        
+        printSituation();        
       }
     }
-  printSituation();
   }
 }
